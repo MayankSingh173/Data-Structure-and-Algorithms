@@ -1,0 +1,59 @@
+Problem Link -> https://leetcode.com/problems/shortest-subarray-to-be-removed-to-make-array-sorted/
+
+Solution : 
+
+class Solution {
+    public int findLengthOfShortestSubarray(int[] arr) {
+        
+        int n = arr.length;
+        
+        ArrayList<Integer> prefix = new ArrayList<>();
+        ArrayList<Integer> suffix = new ArrayList<>();
+        
+        suffix.add(arr[n-1]);
+        prefix.add(arr[0]);
+        
+        for(int i=n-1 ; i > 0 ; i--){
+            if(arr[i] >= arr[i-1]) suffix.add(0,arr[i-1]);
+            else break;
+        }
+        
+        
+        for(int i = 1 ; i<n ; i++){
+            if(arr[i] >= arr[i-1]) prefix.add(arr[i]);
+            else break;
+        }
+        
+        
+        int min = Math.min(n-prefix.size(), n-suffix.size());
+        
+        for(int i=0 ; i<prefix.size() ; i++){
+            int index = search(suffix, prefix.get(i));
+            if(index != -1) {
+                min = Math.min(min, n-(suffix.size()-index+1+i));
+            }
+        }
+        
+        return (min >= 0) ? min : 0;
+    }
+    
+    public int search(ArrayList<Integer> arr, int k){
+        int start = 0, end = arr.size()-1;
+        
+        int index = Integer.MAX_VALUE;
+        
+        while(start <= end){
+            int mid = (start+end)/2;
+            
+            if(arr.get(mid) >= k){
+                index = Math.min(index, mid);
+                end = mid-1;
+            }
+            else{
+                start = mid+1;
+            }
+        }
+        
+        return (index != Integer.MAX_VALUE) ? index : -1;
+    }
+}
