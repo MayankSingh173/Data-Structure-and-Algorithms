@@ -1,0 +1,33 @@
+Problem: https://leetcode.com/problems/x-of-a-kind-in-a-deck-of-cards/
+
+class Solution {
+    public boolean hasGroupsSizeX(int[] deck) {
+        
+        HashMap<Integer, Integer> map = new HashMap<>();
+        
+        for(int elem: deck){
+            if(map.containsKey(elem)){
+                map.put(elem, map.get(elem)+1);
+            }
+            else map.put(elem,1);
+        }
+        
+        int x = Integer.MAX_VALUE;
+        
+        Set<Integer> s = map.keySet();
+        
+        int g = -1;
+        for(int elem: s){
+            if(g == -1) g = map.get(elem);
+            else g = gcd(g, map.get(elem));
+        }
+        
+        if(g > 1) return true;
+        
+        return false;
+    }
+    
+    public int gcd(int x, int y) {
+        return x == 0 ? y : gcd(y%x, x);
+    }
+}

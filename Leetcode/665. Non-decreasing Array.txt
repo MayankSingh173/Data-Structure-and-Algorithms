@@ -1,0 +1,25 @@
+Problem  -> https://leetcode.com/problems/non-decreasing-array/
+
+class Solution {
+    public boolean checkPossibility(int[] nums) {
+        int modifiedCount = 0;
+        
+        for(int i=0; i<nums.length-1; i++){
+            //CHecking if the array is decreasing
+            if(nums[i] > nums[i+1]){
+                modifiedCount++;
+                if(modifiedCount > 1) return false;
+                
+                //Now we have to modify the array...
+                if(i > 0 && nums[i-1] > nums[i+1]){
+                    nums[i+1] = nums[i];
+                }
+                else{
+                    nums[i] = nums[i+1];
+                }
+            }     
+        }
+        
+        return true;
+    }
+}

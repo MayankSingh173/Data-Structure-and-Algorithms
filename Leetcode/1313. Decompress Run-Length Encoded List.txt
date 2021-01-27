@@ -1,0 +1,26 @@
+https://leetcode.com/problems/decompress-run-length-encoded-list/
+
+class Solution {
+    public int[] decompressRLElist(int[] nums) {
+        
+        int length = 0;
+        
+        for(int i=0 ; i<nums.length ; i+=2){
+            length += nums[i];
+        }
+        
+        int answer[] = new int[length];
+        
+        int index = 0;
+        int freq = 0;
+        
+        for(int i=0 ; i<nums.length ; i += 2){
+            freq = nums[i];
+            while(freq-- > 0){
+                answer[index++] = nums[i+1];
+            }
+        }
+        
+        return answer;
+    }
+}

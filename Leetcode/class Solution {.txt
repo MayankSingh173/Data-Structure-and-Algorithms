@@ -1,0 +1,31 @@
+https://leetcode.com/problems/merge-sorted-array/
+
+class Solution {
+    public void merge(int[] num1, int m, int[] num2, int n) {
+        
+        //We are filling the num1 from the back side
+        m--;
+        n--;
+        int index = num1.length-1;
+        
+        while(index >= 0){
+            
+            if(m < 0){
+                num1[index] = num2[n--];
+            }
+            else if(n < 0){
+                num1[index] = num1[m--];
+            }
+            else{
+                if(num1[m] > num2[n]){
+                    num1[index] = num1[m--];
+                }
+                else{
+                    num1[index] = num2[n--];
+                }
+            }
+            
+            index--;
+        }
+    }
+}

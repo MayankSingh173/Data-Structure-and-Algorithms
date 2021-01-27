@@ -1,0 +1,29 @@
+Problem: https://leetcode.com/problems/valid-mountain-array/
+
+class Solution {
+    public boolean validMountainArray(int[] arr) {
+        if(arr.length < 3) return false;
+        
+        int break_point = Integer.MIN_VALUE;
+        
+        for(int i=0 ; i<arr.length-1; i++){
+            
+            //Getting the peak of the mountains
+            if(arr[i] >= arr[i+1]){
+                break_point = i;
+                break;
+            }
+        }
+        
+        //peak cannot be at 0 index
+        if(break_point == Integer.MIN_VALUE || break_point == 0) return false;
+          
+        //checking if it is strictly decreasing after the peak
+        while(break_point < arr.length-1){            
+            if(arr[break_point+1] >= arr[break_point]) return false;
+            break_point++;
+        }
+        
+        return true;
+    }
+}
