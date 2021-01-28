@@ -1,0 +1,28 @@
+https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/
+
+class Solution {
+    public String findLongestWord(String s, List<String> d) {
+        int max = Integer.MIN_VALUE;
+        String ans = "";
+        
+        Collections.sort(d, (a,b) -> (a.length() == b.length()) ? a.compareTo(b) : a.length() - b.length());
+        
+        for(String st: d){
+            int j = 0;
+            
+            for(int i = 0; i<s.length() ; i++){
+                
+                if(j >= st.length()) break;
+                
+                if(s.charAt(i) == st.charAt(j)) j++;
+            }
+            
+            if(j == st.length() && j > max){
+                max = j;
+                ans = st;
+            }
+        }
+        
+        return ans;
+    }
+}

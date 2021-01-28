@@ -1,0 +1,24 @@
+https://leetcode.com/problems/least-number-of-unique-integers-after-k-removals/
+
+class Solution {
+    public int findLeastNumOfUniqueInts(int[] arr, int k) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        
+        for(int elem: arr){
+            map.put(elem, map.getOrDefault(elem, 0)+1);
+        }
+        
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>((a,b) -> map.get(a)-map.get(b));
+        
+        minHeap.addAll(map.keySet());
+        
+        while(k-- > 0){
+            int top = minHeap.peek();
+            map.put(top, map.get(top)-1);
+            
+            if(map.get(top) == 0) minHeap.poll();
+        }
+        
+        return minHeap.size();
+    }
+}

@@ -1,0 +1,68 @@
+https://leetcode.com/problems/insert-interval/
+
+class Solution {
+    public int[][] insert(int[][] points, int[] newInterval) {
+        
+        int n = points.length;
+    
+        if(n == 0){
+            int[][] ans = new int[1][2];
+            ans[0] = newInterval;
+            return ans;
+        }
+        
+        List<Integer> x = new ArrayList<>();
+        List<Integer> y = new ArrayList<>();
+        
+        int start = -1, end = -1;
+        
+        int i;
+        for(i=0; i<n; i++){
+            if(points[i][0] <= newInterval[0] && points[i][1] >= newInterval[0]){
+                start = Math.min(points[i][0], newInterval[0]);
+                break;
+            }
+            else if(newInterval[0] < points[i][0]){
+                start = newInterval[0];
+                break;
+            }
+            else{
+                x.add(points[i][0]); y.add(points[i][1]);
+            }
+        }
+        
+        int j;
+        boolean flag = false;
+        for(j = i; j<n ; j++){
+            if(points[j][0] <= newInterval[1] && points[j][1] >= newInterval[1]){
+                end = Math.max(points[j][1], newInterval[1]);
+                break;
+            }
+            else if(newInterval[1] < points[j][0]){
+                end = newInterval[1];
+                flag = true;
+                break;
+            }
+        }
+        
+        if(end == -1) end = newInterval[1];
+        if(start == -1) start = newInterval[0];
+        x.add(start);
+        y.add(end);
+        
+        int k = (flag) ? j : j+1;
+        while(k<n){
+            x.add(points[k][0]);
+            y.add(points[k][1]);
+            k++;
+        }
+        
+        int ans[][] = new int[x.size()][2];
+        
+        for(int in=0 ; in<x.size(); in++){
+            ans[in][0] = x.get(in);
+            ans[in][1] = y.get(in);
+        }
+        return ans;
+    }
+}
