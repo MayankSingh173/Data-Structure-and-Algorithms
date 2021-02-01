@@ -1,0 +1,18 @@
+https://leetcode.com/problems/decode-xored-array/4
+
+class Solution {
+    public int[] decode(int[] encoded, int first) {
+        int last = first;
+        
+        int ans[] = new int[encoded.length+1];
+        
+        ans[0] = last;
+        
+        for(int i=1; i<ans.length; ++i){
+            ans[i] = encoded[i-1]^last;
+            last = ans[i];
+        }
+        
+        return ans;
+    }
+}
