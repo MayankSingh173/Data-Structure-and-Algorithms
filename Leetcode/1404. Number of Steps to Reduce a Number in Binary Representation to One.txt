@@ -1,0 +1,36 @@
+https://leetcode.com/problems/number-of-steps-to-reduce-a-number-in-binary-representation-to-one/
+
+
+class Solution {
+    public int numSteps(String s) {
+        StringBuilder sb = new StringBuilder(s);
+        
+        int steps = 0;
+        while(sb.length() > 1){
+            if(sb.charAt(sb.length()-1) == '0'){
+                sb.delete(sb.length()-1, sb.length());
+                steps++;
+                continue;
+            }
+            
+            boolean check = false;
+            
+            for(int k = sb.length()-1 ; k >= 0 ; --k){
+                if(sb.charAt(k) == '0'){
+                    sb.replace(k,k+1,"1");
+                    check = true;
+                    break;
+                }
+                else{
+                    sb.replace(k,k+1,"0");
+                }
+            }
+            if(!check){
+                    sb.insert(0,"1");
+            }
+            steps++;
+        }
+        
+        return steps;
+    }
+}
