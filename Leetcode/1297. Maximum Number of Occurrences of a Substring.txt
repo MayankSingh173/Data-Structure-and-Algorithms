@@ -1,0 +1,30 @@
+https://leetcode.com/problems/maximum-number-of-occurrences-of-a-substring/
+
+class Solution {
+    public int maxFreq(String s, int maxLetters, int minSize, int maxSize) {
+        
+        Map<String, Integer> map = new HashMap<>();
+        
+        int n = s.length(), res = 0;
+        
+        for(int i=0; i < n-minSize+1 ; ++i){
+            String sub = s.substring(i, i+minSize);
+            
+            if(isValid(sub, maxLetters, maxSize)) {
+                map.put(sub, map.getOrDefault(sub, 0)+1);
+                res = Math.max(res, map.get(sub));
+            }
+        }
+        return res;
+    }
+    
+    private boolean isValid(String s, int maxLetters, int maxSize){
+        Set<Character> set = new HashSet<>();
+        
+        for(char c: s.toCharArray()){
+            set.add(c);
+        }
+        
+        return (set.size() <= maxLetters);
+    }
+}

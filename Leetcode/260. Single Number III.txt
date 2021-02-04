@@ -1,0 +1,30 @@
+https://leetcode.com/problems/single-number-iii/
+
+class Solution {
+    public int[] singleNumber(int[] nums) {
+        int total_xor = 0;
+        
+        for(int elem: nums) total_xor ^= elem;
+        
+        //finding the pos of first set bit from left
+        int pos = 0;
+        
+        while(true){
+            if((total_xor & (1<<pos)) != 0) break;
+            else pos++;
+        }
+        
+        
+        int first_num = 0, second_num = 0;
+        
+        for(int elem: nums){
+            if((elem & (1<<pos)) != 0) first_num ^= elem;
+            else second_num ^= elem;
+        }
+        
+        int ans[] = new int[2];
+        ans[0] = first_num;
+        ans[1] = second_num;
+        return ans;
+    }
+}
