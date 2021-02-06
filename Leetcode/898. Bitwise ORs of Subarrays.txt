@@ -1,0 +1,32 @@
+https://leetcode.com/problems/bitwise-ors-of-subarrays/
+
+class Solution {
+    public int subarrayBitwiseORs(int[] arr) {
+        
+        Set<Integer> ans = new HashSet<>();
+        
+        //This is used to store all unique OR of previous subarrays at particular point
+        Set<Integer> prev = new HashSet<>();
+        
+        ans.add(arr[0]);
+        prev.add(arr[0]);
+        
+        for(int i=1 ; i<arr.length ; ++i){
+            
+            //This will store all unique OR of subarrays including OR of curr;
+            Set<Integer> curr = new HashSet<>();
+            
+            curr.add(arr[i]);
+            prev.add(arr[i]);
+            
+            for(int elem: prev){
+                curr.add(elem|arr[i]);
+                ans.add(elem|arr[i]);
+            }
+            
+            prev = curr;
+        }
+        
+        return ans.size();
+    }
+}
